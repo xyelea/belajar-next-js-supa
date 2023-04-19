@@ -1,5 +1,6 @@
 import { supabase } from "../utils/supabase";
 import Link from "next/link";
+
 interface Lesson {
   id: number;
   title: string;
@@ -12,6 +13,17 @@ interface Props {
 }
 
 export default function Home({ lessons }: Props) {
+  async function getUserData() {
+    try {
+      const data = await supabase.auth.getUser();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  getUserData();
+
   return (
     <main className="w-full max-w-3xl mx-auto my-16 px-2">
       {lessons.map((lesson) => (

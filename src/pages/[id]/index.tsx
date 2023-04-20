@@ -1,5 +1,5 @@
 import { supabase } from "@/utils/supabase";
-import { LessonType } from "../../../types/collection";
+import { LessonType } from "../../types/collection";
 
 interface LessonDetailsProps {
   lesson: LessonType;

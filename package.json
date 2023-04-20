@@ -10,6 +10,8 @@
     "gen-types": "npx supabase gen types typescript --linked > types/supabase.ts"
   },
   "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.6.1",
+    "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/supabase-js": "^2.21.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",

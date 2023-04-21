@@ -3,7 +3,12 @@ import { LessonType } from "@/types/collection";
 
 const LessonDetails = ({ lesson }: { lesson: LessonType }) => {
   console.log(lesson);
-  return <div>works</div>;
+  return (
+    <div className="w-full max-w-3xl mx-auto py-16 px8">
+      <h1 className="text-3xl mb-6">{lesson.title}</h1>
+      <p>{lesson.description}</p>
+    </div>
+  );
 };
 
 type Params = {

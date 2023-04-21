@@ -60,32 +60,6 @@ export interface Database {
           name?: string | null
         }
       }
-      course: {
-        Row: {
-          course_description: string | null
-          course_id: string
-          course_name: string | null
-          created_at: string | null
-          lesson_id: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          course_description?: string | null
-          course_id: string
-          course_name?: string | null
-          created_at?: string | null
-          lesson_id?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          course_description?: string | null
-          course_id?: string
-          course_name?: string | null
-          created_at?: string | null
-          lesson_id?: string | null
-          updated_at?: string | null
-        }
-      }
       lesson: {
         Row: {
           created_at: string | null
@@ -106,62 +80,30 @@ export interface Database {
           title?: string | null
         }
       }
-      posts: {
+      profile: {
         Row: {
-          author: string | null
           created_at: string | null
-          data: Json | null
-          id: string
-          name: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          author?: string | null
-          created_at?: string | null
-          data?: Json | null
-          id: string
-          name?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          author?: string | null
-          created_at?: string | null
-          data?: Json | null
-          id?: string
-          name?: string | null
-          updated_at?: string | null
-        }
-      }
-      profiles: {
-        Row: {
-          avatar_url: string | null
-          full_name: string | null
+          email: string | null
           id: string
           interval: string | null
           is_subscribed: boolean | null
           stripe_customer: string | null
-          updated_at: string | null
-          username: string | null
         }
         Insert: {
-          avatar_url?: string | null
-          full_name?: string | null
+          created_at?: string | null
+          email?: string | null
           id: string
           interval?: string | null
           is_subscribed?: boolean | null
           stripe_customer?: string | null
-          updated_at?: string | null
-          username?: string | null
         }
         Update: {
-          avatar_url?: string | null
-          full_name?: string | null
+          created_at?: string | null
+          email?: string | null
           id?: string
           interval?: string | null
           is_subscribed?: boolean | null
           stripe_customer?: string | null
-          updated_at?: string | null
-          username?: string | null
         }
       }
     }

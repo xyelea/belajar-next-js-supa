@@ -3,8 +3,14 @@ import { supabase } from "@/utils/supabase";
 
 const Login = () => {
   useEffect(() => {
-    supabase.auth.signInWithOAuth({ provider: "github" });
+    async function signInWithGithub() {
+      await supabase.auth.signInWithOAuth({
+        provider: "github",
+      });
+    }
+    signInWithGithub();
   }, []);
+
   return <p>Loggin in</p>;
 };
 

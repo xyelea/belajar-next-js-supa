@@ -1,41 +1,29 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "../../types/supabase";
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+import Stripe from "stripe";
+import { supabase } from "@/utils/supabase";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.query.API_ROUTE_SECRET !== process.env.API_ROUTE_SECRET) {
-    return res.status(401).json("Not authorized to call this API");
+    return res.status(401).json("Not Authorized");
   }
 
-  if (req.method === "POST") {
-    // Create authenticated Supabase Client
-    const supabaseServerClient = createServerSupabaseClient<Database>({
-      req,
-      res,
-    });
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+    apiVersion: "2022-11-15",
+  });
 
-    try {
-      const customer = await stripe.customers.create({
-        email: req.body.record.email,
-      });
+  const customer = await stripe.customers.create({
+    email: req.body.record.email,
+  });
 
-      await supabaseServerClient
-        .from("profile")
-        .update({ stripe_customer: customer.id })
-        .eq("id", req.body.record.id)
-        .select();
+  const { data } = await supabase
+    .from("profile")
+    .update({ stripe_customer: customer.id })
+    .eq("id", req.body.record.id)
+    .select();
 
-      res
-        .status(200)
-        .json({ message: `stripe customer created: ${customer.id}` });
-    } catch (err: any) {
-      res.status(err.statusCode || 500).json(err.message);
-    }
-  } else {
-    res.setHeader("Allow", "POST");
-    res.status(405).end("Method Not Allowed");
-  }
+  console.log("user updated", data);
+
+  res.send({ message: `stripe customer berhasil dibuat ${customer.id}` });
 };
 
 export default handler;

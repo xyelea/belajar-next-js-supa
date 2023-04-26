@@ -2,8 +2,23 @@ import { supabase } from "@/utils/supabase";
 import { LessonType } from "@/types/collection";
 import Link from "next/link";
 
+// const getUser = async () => {
+//   try {
+//     const {
+//       data: { user },
+//     } = await supabase.auth.getUser();
+
+//     console.log(user);
+//     if (!user) {
+//       console.log("user tidak ditemukan");
+//     }
+//   } catch (error: any) {
+//     console.log(`Error: ${error.message}`);
+//   }
+// };
+
 export default function Home({ lessons }: { lessons: LessonType[] }) {
-  // console.log(lessons);
+  console.log("user", supabase.auth.getUser());
   return (
     <div className="w-full max-w-3xl mx-auto my-16 px-2">
       {lessons.map((lesson) => (

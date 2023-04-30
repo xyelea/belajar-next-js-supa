@@ -1,16 +1,10 @@
 import { useEffect } from "react";
-import { supabase } from "@/utils/supabase";
+import { useUser } from "@/context/user";
 
 const Login = () => {
-  useEffect(() => {
-    async function signInWithGithub() {
-      await supabase.auth.signInWithOAuth({
-        provider: "github",
-      });
-    }
-    signInWithGithub();
-  }, []);
+  const { login } = useUser();
 
+  useEffect(login, []);
   return <p>Loggin in</p>;
 };
 

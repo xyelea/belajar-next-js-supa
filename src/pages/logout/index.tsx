@@ -4,7 +4,9 @@ import { useUser } from "@/context/user";
 const LogOut = () => {
   const { logout } = useUser();
 
-  useEffect(logout, []);
+  useEffect(() => {
+    logout();
+  }, []);
   return <div>Logging Out</div>;
 };
 

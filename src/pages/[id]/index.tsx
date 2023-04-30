@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Video from "react-player";
 
 const LessonDetails = ({ lesson }: { lesson: LessonType }) => {
-  const [video_url, setVideoUrl] = useState<string>();
+  const [videoUrl, setVideoUrl] = useState<string>();
 
   const getPremiumContent = async () => {
     const { data } = await supabase
@@ -29,7 +29,12 @@ const LessonDetails = ({ lesson }: { lesson: LessonType }) => {
     <div className="w-full max-w-3xl mx-auto py-16 px8">
       <h1 className="text-3xl mb-6">{lesson.title}</h1>
       <p className="mb-8">{lesson.description}</p>
-      {!!video_url && <Video url={video_url} width="100%" controls />}
+      {!!videoUrl && <Video url={videoUrl} width="100%" controls />}
+      {!videoUrl && (
+        <p className="py-6 px-4 rounded bg-purple-100 border border-solid border-violet-400 text-violet-600 text-center">
+          Silahkan berlangganan terlebih dahulu sebelum melihat konten
+        </p>
+      )}
     </div>
   );
 };

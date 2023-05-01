@@ -7,7 +7,11 @@ const LogOut = () => {
   useEffect(() => {
     logout();
   }, []);
-  return <div>Logging Out</div>;
+  return (
+    <div>
+      <p>Sampai Jumpa Lagi Masbro!</p>
+    </div>
+  );
 };
 
 export default LogOut;

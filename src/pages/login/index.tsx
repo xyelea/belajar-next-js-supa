@@ -7,7 +7,11 @@ const Login = () => {
   useEffect(() => {
     login();
   }, []);
-  return <p>Loggin in</p>;
+  return (
+    <div>
+      <p>sedang memuat masbro!</p>
+    </div>
+  );
 };
 
 export default Login;

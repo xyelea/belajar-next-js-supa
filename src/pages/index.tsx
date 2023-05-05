@@ -1,31 +1,75 @@
+import Link from "next/link";
+import { GetServerSidePropsContext } from "next";
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { supabase } from "@/utils/supabase";
 import { LessonType } from "@/types/collection";
-import Link from "next/link";
-import { useUser } from "@/context/user";
+import { useUserContext } from "@/context/user";
+import { Database } from "@/types/supabase";
 
-export default function Home({ lessons }: { lessons: LessonType[] }) {
-  const user = useUser();
-  console.log({ user });
+export type Lesson = {
+  id: string;
+  created_at: Date;
+  title: string;
+  description: string;
+};
+
+export default function Home({ lessons }: { lessons: Lesson[] }) {
+  const { user } = useUserContext();
+
+  console.log("LESSONS - USER", user);
+
+  console.log("LESSONS - HOME", lessons);
+
   return (
-    <div className="w-full max-w-3xl mx-auto my-16 px-2">
-      {lessons.map((lesson) => (
-        <Link
-          key={lesson.id}
-          href={`/${lesson.id}`}
-          className="p-8 mb-4 rounded shadow text-xl flex">
-          {lesson.title}
-        </Link>
-      ))}
-    </div>
+    <>
+      <div className="w-full max-w-3xl mx-auto my-16 px-2">
+        {lessons &&
+          lessons.map((lesson: Lesson) => (
+            <Link
+              key={lesson.id}
+              href={`/${lesson.id}`}
+              className="p-8 mb-4 rounded shadow text-xl flex">
+              {lesson.title}
+            </Link>
+          ))}
+      </div>
+      {user && (
+        <pre className="w-full max-w-3xl mx-auto my-8 px-2 text-center text-red-700">
+          {JSON.stringify(user, null, 2)}
+        </pre>
+      )}
+    </>
   );
 }
 
-export const getStaticProps = async () => {
-  const { data: lessons } = await supabase.from("lesson").select("*");
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  // buat authenticated supabase client
+
+  // Create authenticated Supabase Client
+  const supabaseServerClient = createServerSupabaseClient<Database>(ctx);
+
+  // Check if we have a session
+  const {
+    data: { session },
+  } = await supabaseServerClient.auth.getSession();
+
+  const { data: lessons } = await supabaseServerClient
+    .from("lesson")
+    .select("*");
+
+  if (!session) {
+    return {
+      props: {
+        lessons,
+      },
+    };
+  }
 
   return {
     props: {
       lessons,
+      initialSession: session,
+      user: session.user,
     },
   };
 };
